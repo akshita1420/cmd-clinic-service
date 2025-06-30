@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClinicRepository extends JpaRepository<Clinic, Long> {
-    // We can add custom queries later
+    // add custom queries later
 }
