@@ -1,20 +1,20 @@
 package com.cmd.clinic.mapper;
+
 import com.cmd.clinic.dto.ClinicDTO;
 import com.cmd.clinic.entity.Clinic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-
-
 @Component
 public class ClinicMapper {
 
-    //DTo -> Entity
-    public Clinic toEntity(ClinicDTO dto){
-        if (dto==null) return null;
+    @Autowired
+    private ServiceMapper serviceMapper;
 
-        Clinic clinic=new Clinic();
+    public Clinic toEntity(ClinicDTO dto){
+        if (dto == null) return null;
+
+        Clinic clinic = new Clinic();
         clinic.setName(dto.getName());
         clinic.setStreetAddress(dto.getStreetAddress());
         clinic.setCity(dto.getCity());
@@ -24,18 +24,19 @@ public class ClinicMapper {
         clinic.setPhoneNumber(dto.getPhoneNumber());
         clinic.setType(dto.getType());
 
-        return clinic;
+        if (dto.getServices() != null) {
+            clinic.setServices(
+                    dto.getServices().stream()
+                            .map(serviceMapper::toEntity)
+                            .toList()
+            );
+        }
 
+        return clinic;
     }
 
-
-
-
-
-
-    //Entity-> DTO
     public ClinicDTO toDto(Clinic clinic){
-        if(clinic==null) return null;
+        if (clinic == null) return null;
 
         return ClinicDTO.builder()
                 .name(clinic.getName())
@@ -46,8 +47,12 @@ public class ClinicMapper {
                 .zipCode(clinic.getZipCode())
                 .phoneNumber(clinic.getPhoneNumber())
                 .type(clinic.getType())
+                .services(clinic.getServices() != null ?
+                        clinic.getServices().stream()
+                                .map(serviceMapper::toDTO)
+                                .toList()
+                        : null
+                )
                 .build();
     }
-
-
 }

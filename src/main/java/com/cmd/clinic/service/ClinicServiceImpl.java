@@ -35,7 +35,8 @@ public class ClinicServiceImpl implements ClinicService {
     }
     @Override
     public List<ClinicDTO> getAllClinics(){
-        return clinicRepository.findAll().stream()
+        return clinicRepository.findAll()
+                .stream()
                 .map(clinicMapper::toDto)
                 .collect(Collectors.toList());
     }
