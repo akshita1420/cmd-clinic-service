@@ -8,4 +8,5 @@ public interface ClinicService {
     ClinicDTO addClinic(ClinicDTO clinicDTO);
 
     List<ClinicDTO> getAllClinics();
+
 }
