@@ -17,7 +17,7 @@ ClinicController {
     @Autowired
     private ClinicService clinicService;
 
-    // POST /clinics
+
     @PostMapping
     public ResponseEntity<ClinicDTO> addClinic(@RequestBody @Valid ClinicDTO clinicDTO) {
         ClinicDTO savedClinic = clinicService.addClinic(clinicDTO);
